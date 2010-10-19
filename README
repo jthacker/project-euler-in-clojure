@@ -1,0 +1,5 @@
+# project_euler
+To run a problem and check the answer use:
+lein run src/project_euler/Problem_[0-9]+.clj
+
+This assumes that the problem is using the library function "answer" for providing the result.
