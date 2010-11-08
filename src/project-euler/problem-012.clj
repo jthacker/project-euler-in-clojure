@@ -1,6 +1,3 @@
-(ns project_euler.problem-12
-    [:use [project_euler.lib]])
-
 (defn triangle-numbers []
       (map first 
            (iterate (fn [[t n]]
@@ -10,9 +7,5 @@
 (defn divisors [n]
       (filter #(zero? (rem n %)) (range 1 (+ 1 n))))
 
-(answer 
-  "What is the value of the first triangle number to have over five hundred divisors?"
-  (first 
-    (filter 
-      #(< 500 (count (divisors %)))
-      (triangle-numbers))))
+(defn first-triangle-number-with-over-n-divisors [n]
+      (second (first (filter #(> (first %) n) (map (fn [m] [(count (divisors m)) m]) (triangle-numbers))))))
