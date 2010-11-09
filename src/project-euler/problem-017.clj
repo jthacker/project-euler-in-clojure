@@ -1,7 +1,4 @@
-(ns project-euler.problem-017
-    [:require [project-euler [lib :as lib]]])
-
-(def english-numbers { 
+(def one-to-nineteen-map {
     1 "one"
     2 "two"
     3 "three"
@@ -20,25 +17,53 @@
     16 "sixteen"
     17 "seventeen"
     18 "eighteen"
-    19 "nineteen"
-    20 "twenty"
-    30 "thirty"
-    40 "forty"
-    50 "fifty"
-    60 "sixty"
-    70 "seventy"
-    80 "eighty"
-    90 "ninety"
-    100 "hundred"
-    1000 "thousand" })
+    19 "nineteen"})
 
-        
-; 1->19    106
-; 1->9     36
-; L(20,30,40,50,60,70,80,90)  46
-; 20->29   L(20) * 10 + L(1->9)
-; 30->39   L(30) * 10 + L(1->9)
-; 20->99   L(20,30,40,50,60,70,80,90) * 10 + 8 * L(1->9)
-; 1->99    L(20,...,90) * 10 + L(1->19) + L(1->9) * 8       854
-; 100->199 (L(100) + L(and)) * 100 + L(1->99)
-; 200->299 (L(200) + L(and)) * 100 + L(1->99)
+
+(def tens-map {
+    2 "twenty"
+    3 "thirty"
+    4 "forty"
+    5 "fifty"
+    6 "sixty"
+    7 "seventy"
+    8 "eighty"
+    9 "ninety" }) 
+
+
+(defn split-by-powers-of-ten
+      "returns n as a coll of its digits in reverse"
+      ([n]
+       (reverse
+         (map 
+            #(Integer/parseInt (str %))
+            (seq (str n)))))) 
+
+
+(defn one-to-ninety-nine
+      ([n]
+       (cond 
+         (<= n 0)
+            nil
+         (<= n 19)
+            (get one-to-nineteen-map n)
+         :else
+            (let [[ones tens] (split-by-powers-of-ten n)]
+              (if (zero? ones) 
+                (get tens-map tens)
+                (format 
+                   "%s %s" 
+                   (get tens-map tens) 
+                   (get one-to-nineteen-map ones))))))) 
+
+
+(def higher-powers '("hundred" "thousand"))
+
+
+(defn spell-number
+      ([n]
+       (let [p (split-by-powers-of-ten n)]
+         (if (= (count p) 1)
+           (one-to-ninty-nine n)
+           (let [first-two]))))) 
+

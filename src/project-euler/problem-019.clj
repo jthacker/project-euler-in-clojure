@@ -41,11 +41,22 @@
                 (list (take n p))))))))
 
 
-(defn sundays-on-the-first-of-the-month
-      ([start-year end-year] 
-       (count 
+(defn days-of-the-week-for-years
+      "start-year must be >= 1900"
+      ([end-year]
+       (days-of-the-week-per-month 1900 end-year))
+      ([start-year end-year]
+       (drop (* (- start-year 1900) 12)
+         (partition-with
+            (flatten (map #(get-months-of %) (range 1900 (inc end-year))))
+            (days-of-the-week-cycle)))))
+
+
+(defn sundays-on-first-of-month
+      ([start-year end-year]
+       (count
          (filter
             #(= (first %) :sunday)
-            (partition-with 
-               (flatten (map #(get-months-of %) (range start-year (inc end-year))))
-               (days-of-the-week-cycle)))))) 
+            (days-of-the-week-for-years start-year end-year)))))
+
+(def answer (sundays-on-first-of-month 1901 2000))
