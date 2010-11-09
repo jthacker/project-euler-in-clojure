@@ -44,7 +44,7 @@
 (defn days-of-the-week-for-years
       "start-year must be >= 1900"
       ([end-year]
-       (days-of-the-week-per-month 1900 end-year))
+       (days-of-the-week-for-years 1900 end-year))
       ([start-year end-year]
        (drop (* (- start-year 1900) 12)
          (partition-with
