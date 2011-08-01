@@ -36,7 +36,6 @@
 (defn sieve [n]
       (for [p primes :while (< p n)] p))
 
-
 (defn prime-factors
       ([n] (prime-factors [] n 2))
       ([prime-factors n candidate]

@@ -1,4 +1,7 @@
 # project_euler
+# TODO: change namespaces for problems to reflect the directory change
+# TODO: implement more robust solution checker in core.clj
+#
 To run a problem and check the answer use:
 lein run src/project_euler/Problem_[0-9]+.clj
 
